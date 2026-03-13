@@ -1,23 +1,207 @@
-# Vehicle-Detection-and-Tracking
+# Vehicle Detection and Tracking
 
-This entire project was developed on the context of a paper entitled "Lightweight YOLO Frameworks for Vehicle Detection and Re-ID-Enhanced DeepSORT Tracking".
+This repository contains the implementation developed for the research paper:
 
-For this project, several YOLO detectors were trained and benchmarked on the UA-DETRAC dataset together with an enhanced DeepSORT approach.
+**"Lightweight YOLO Frameworks for Vehicle Detection and Re-ID-Enhanced DeepSORT Tracking"**
 
-To start, it's first necessary to acquire the training dataset. UA-DETRAC is currently not available online, thus it's necessary to contact any researcher or another go-to person from the University of Albany.
+The project evaluates several lightweight YOLO-based object detectors combined with an enhanced DeepSORT tracking framework for vehicle detection and multi-object tracking.
 
-It's first necessary to preprocess the annotations into a YOLO-ready format. Then, another preprocessing step needs to be conducted to separate the videos into individual frames. Finally, a sub-sampling method is performed to keep only one frame every ten samples, to make the dataset less equal within itself, reducing overfit probability, and simplifying training.
+The system is trained and evaluated primarily on the **UA-DETRAC dataset**, with an additional **Re-Identification (ReID)** training stage based on the **VeRI-776 dataset**.
 
-Then, it's the whole dataset is uploaded to Roboflow to create the dataset ready for deployment. It is available at https://universe.roboflow.com/altice-lzmaq/vehicle-detection-and-tracking-l2epo and it's also strongly recommended for users to start the replicability of our experiment from here.
+---
 
-With the dataset properly organized and ready, it's possible now to begin training. We called several YOLO lightweight detectors and trained those models on variable configurations, to ensure optimizability and avoid crashes (some models are really heavy and it's possible to lose ours of training due to memory overflowing).
+# Project Overview
 
-We save the best.pt models for each version trained. Then, inference is conducted on the 40 unseen videos of the dataset (it's now again mandatory to perform the same processing steps as before for this new subset) to retreive several performance values, corresponding to valuable metrics such as Precision, Recall, mAP@0.5, mAP@[0.5:0.95], loss values, etc...
+The pipeline implemented in this project follows these main stages:
 
-Now, with the detection phase already analyzed, it's time to jump into the tracking phase. But before that, it's important to train the ReID module of DeepSORT on the VeRI-776 dataset, again available through a direct message to the Beijing University of Posts and Telecommunications. We basically replicate the backbone structure of the ReID module and retrain it the dataset, generating two versions of the same module: one standard, and another enhanced. This will establish a direct comparison between those approaches.
+1. Dataset acquisition  
+2. Dataset preprocessing  
+3. Dataset organization and deployment preparation  
+4. YOLO model training  
+5. Detection evaluation  
+6. ReID model training for DeepSORT  
+7. Detection + tracking integration  
+8. Tracking evaluation  
+9. Real-time visualization and traffic report generation
 
-All YOLO detectors and DeepSORT variants are integrated between each other to perform detection and tracking for the 40 unseen test videos. Reports are generated across 10 confidence thresholds to give insights about performance for all confidences. These reports are then passed to the UA-DETRAC toolkit, which computes both the AP@0.7 and several other tracking metrics, with the latter one being the most useful, for a specific region of interest in the image. From here, tracking is properly analyzed and fit for reporting.
+Each stage is described below.
 
-A final experiment can be done in the end to visually insect how the system detects and tracks each vehicle in real-time, while producing a valuable report on the vehicle usage in the end.
+---
 
-Any questions, please address joaomatiasgoncalves321@hotmail.com
+# 1. Dataset Acquisition
+
+The primary dataset used in this project is **UA-DETRAC**, a large-scale benchmark for vehicle detection and multi-object tracking.
+
+At the time of writing, the dataset is not publicly hosted online. To obtain it, users typically need to request access from researchers associated with the **University at Albany (SUNY)** or other researchers who maintain a local copy.
+
+Files involved in this step:  
+*(add dataset acquisition scripts or instructions here)*
+
+---
+
+# 2. Dataset Preprocessing
+
+Before training, the dataset must be converted into a format compatible with YOLO detectors.
+
+The preprocessing pipeline includes:
+
+1. **Annotation conversion**  
+   - UA-DETRAC annotations are converted to the **YOLO bounding box format**.
+
+2. **Video frame extraction**  
+   - All videos are decomposed into individual frames.
+
+3. **Frame subsampling**  
+   - To reduce dataset redundancy and improve training efficiency, only **one frame out of every ten frames** is retained.  
+   - This reduces temporal similarity between samples and helps mitigate potential overfitting.
+
+Files involved in this step:  
+*(add preprocessing scripts here)*
+
+---
+
+# 3. Dataset Organization
+
+After preprocessing, the dataset is uploaded to **Roboflow** to simplify dataset management and deployment.
+
+Roboflow allows for:
+- easier dataset versioning
+- annotation visualization
+- direct export to YOLO-compatible formats
+
+The dataset used in this project can be accessed here:
+
+https://universe.roboflow.com/altice-lzmaq/vehicle-detection-and-tracking-l2epo
+
+For reproducibility, it is **strongly recommended to start from this dataset version**.
+
+Files involved in this step:  
+*(add Roboflow export configuration or scripts here)*
+
+---
+
+# 4. YOLO Model Training
+
+Several **lightweight YOLO architectures** were trained and benchmarked on the processed dataset.
+
+Multiple training configurations were explored in order to:
+
+- optimize model performance
+- prevent GPU memory overflow
+- avoid training crashes caused by large model variants
+
+During training, the **best-performing checkpoint (`best.pt`)** is automatically saved for each experiment.
+
+Files involved in this step:  
+*(add training scripts and configuration files here)*
+
+---
+
+# 5. Detection Evaluation
+
+After training, the detectors are evaluated on **40 unseen test videos** from the UA-DETRAC dataset.
+
+The test videos must undergo the **same preprocessing steps** applied to the training data:
+
+- annotation conversion
+- frame extraction
+- frame subsampling
+
+From the inference stage, several detection metrics are computed, including:
+
+- Precision
+- Recall
+- mAP@0.5
+- mAP@0.5:0.95
+- Training loss values
+
+These metrics provide insights into the detection performance of each YOLO architecture.
+
+Files involved in this step:  
+*(add inference and evaluation scripts here)*
+
+---
+
+# 6. ReID Model Training (DeepSORT)
+
+Before running the tracking pipeline, the **Re-Identification (ReID) module used by DeepSORT** must be trained.
+
+This project uses the **VeRI-776 dataset**, which can be obtained by contacting the **Beijing University of Posts and Telecommunications**.
+
+The ReID backbone is retrained using this dataset to produce two variants:
+
+- **Standard ReID module**
+- **Enhanced ReID module**
+
+This allows a direct comparison between the baseline DeepSORT pipeline and the improved version proposed in the research.
+
+Files involved in this step:  
+*(add ReID training scripts here)*
+
+---
+
+# 7. Detection and Tracking Integration
+
+All trained YOLO detectors are integrated with the DeepSORT tracking framework.
+
+Each combination of:
+
+- YOLO detector
+- DeepSORT variant
+
+is evaluated on the **40 unseen test videos**.
+
+Detection reports are generated for **10 different confidence thresholds**, allowing a detailed analysis of system performance across different detection sensitivities.
+
+Files involved in this step:  
+*(add integration scripts here)*
+
+---
+
+# 8. Tracking Evaluation
+
+The generated detection and tracking results are processed using the **UA-DETRAC evaluation toolkit**.
+
+This toolkit computes both detection and tracking metrics, including:
+
+Detection metric:
+- AP@0.7
+
+Tracking metrics:
+- MOTA
+- MOTP
+- ID Switches
+- Mostly Tracked (MT)
+- Mostly Lost (ML)
+- Fragmentation (FM)
+
+Evaluation is performed within a **region of interest (ROI)** defined for each video sequence.
+
+Files involved in this step:  
+*(add evaluation scripts here)*
+
+---
+
+# 9. Real-Time Visualization
+
+A final experiment allows the system to perform **real-time vehicle detection and tracking**.
+
+During this stage, the system:
+
+- visually displays detected vehicles
+- assigns consistent IDs to tracked vehicles
+- generates a report summarizing vehicle traffic activity
+
+This stage helps qualitatively assess the pipeline in a realistic deployment scenario.
+
+Files involved in this step:  
+*(add visualization scripts here)*
+
+---
+
+# Contact
+
+For questions regarding the project or implementation details, please contact:
+
+**João Matias**  
+joaomatiasgoncalves321@hotmail.com

@@ -1,0 +1,2 @@
+model_checkpoint_path: "veri_vehicle_only.ckpt"
+all_model_checkpoint_paths: "veri_vehicle_only.ckpt"

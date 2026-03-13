@@ -1,0 +1,17 @@
+test: 
+train:
+val: "C:/val"
+
+# O YOLO procura os labels automaticamente em uma pasta chamada 'labels' 
+# que esteja no mesmo nível ou dentro da pasta de imagens.
+# Se você seguiu meus passos, garanta que test_labels esteja configurada assim:
+
+nc: 4
+names: ['0', '1', '3', '4']
+
+roboflow:
+  workspace: altice-lzmaq
+  project: vehicle-detection-and-tracking-l2epo
+  version: 3
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/altice-lzmaq/vehicle-detection-and-tracking-l2epo/dataset/3

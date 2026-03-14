@@ -156,9 +156,6 @@ Tracking metrics:
 
 Evaluation is performed within a **region of interest (ROI)** defined for each video sequence.
 
-Files involved in this step:  
-*(add evaluation scripts here)*
-
 ---
 
 # 9. Real-Time Visualization
@@ -172,9 +169,6 @@ During this stage, the system:
 - generates a report summarizing vehicle traffic activity
 
 This stage helps qualitatively assess the pipeline in a realistic deployment scenario.
-
-Files involved in this step:  
-*(add visualization scripts here)*
 
 ---
 

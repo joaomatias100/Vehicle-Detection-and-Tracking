@@ -34,9 +34,6 @@ The primary dataset used in this project is **UA-DETRAC**, a large-scale benchma
 
 At the time of writing, the dataset is not publicly hosted online. To obtain it, users typically need to request access from researchers associated with the **University at Albany (SUNY)** or other researchers who maintain a local copy.
 
-Files involved in this step:  
-*(add dataset acquisition scripts or instructions here)*
-
 ---
 
 # 2. Dataset Preprocessing
@@ -55,9 +52,6 @@ The preprocessing pipeline includes:
    - To reduce dataset redundancy and improve training efficiency, only **one frame out of every ten frames** is retained.  
    - This reduces temporal similarity between samples and helps mitigate potential overfitting.
 
-Files involved in this step:  
-*(add preprocessing scripts here)*
-
 ---
 
 # 3. Dataset Organization
@@ -75,9 +69,6 @@ https://universe.roboflow.com/altice-lzmaq/vehicle-detection-and-tracking-l2epo
 
 For reproducibility, it is **strongly recommended to start from this dataset version**.
 
-Files involved in this step:  
-*(add Roboflow export configuration or scripts here)*
-
 ---
 
 # 4. YOLO Model Training
@@ -91,9 +82,6 @@ Multiple training configurations were explored in order to:
 - avoid training crashes caused by large model variants
 
 During training, the **best-performing checkpoint (`best.pt`)** is automatically saved for each experiment.
-
-Files involved in this step:  
-*(add training scripts and configuration files here)*
 
 ---
 
@@ -117,9 +105,6 @@ From the inference stage, several detection metrics are computed, including:
 
 These metrics provide insights into the detection performance of each YOLO architecture.
 
-Files involved in this step:  
-*(add inference and evaluation scripts here)*
-
 ---
 
 # 6. ReID Model Training (DeepSORT)
@@ -134,9 +119,6 @@ The ReID backbone is retrained using this dataset to produce two variants:
 - **Enhanced ReID module**
 
 This allows a direct comparison between the baseline DeepSORT pipeline and the improved version proposed in the research.
-
-Files involved in this step:  
-*(add ReID training scripts here)*
 
 ---
 
@@ -153,14 +135,11 @@ is evaluated on the **40 unseen test videos**.
 
 Detection reports are generated for **10 different confidence thresholds**, allowing a detailed analysis of system performance across different detection sensitivities.
 
-Files involved in this step:  
-*(add integration scripts here)*
-
 ---
 
 # 8. Tracking Evaluation
 
-The generated detection and tracking results are processed using the **UA-DETRAC evaluation toolkit**.
+The generated detection and tracking results are processed using the **UA-DETRAC evaluation toolkit**, which was obtained by the authors of the UA-DETRAC dataset.
 
 This toolkit computes both detection and tracking metrics, including:
 

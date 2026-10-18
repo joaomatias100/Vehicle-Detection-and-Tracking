@@ -1,0 +1,58 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.venv/
+venv/
+.env
+
+# Training outputs and generated artifacts
+runs/
+logs/
+wandb/
+*.log
+*.cache
+*.npy
+*.xlsx
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.mp4
+*.avi
+
+# Model checkpoints and large binary weights
+*.pt
+*.pth
+*.ckpt
+*.h5
+*.keras
+
+# Keep the selected frozen graph files available locally,
+# but review their provenance before publishing.
+# Uncomment the next line to exclude all frozen graphs:
+# *.pb
+
+# Dataset exports and local data
+datasets/
+data/images/
+data/labels/
+
+# Local experimental variants excluded from the public repository
+/inference.py
+/tracker_deepsort.py
+
+# Trained Re-ID model binaries
+*.pb
+
+# Experimental scripts and notebooks excluded from the public version
+/conversion_matlab.py
+/count_classes.py
+/fps.py
+/matlab_inference_detections.py
+/parse_veri.py
+/train_deep_sort.py
+/transformnames.py
+/transform_labels.ipynb
+/transform_uadetrac.ipynb
+
